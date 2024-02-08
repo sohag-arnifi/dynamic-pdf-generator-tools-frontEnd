@@ -1,10 +1,6 @@
 export const documents = [
   {
     id: 1,
-    name: "Draft Will",
-  },
-  {
-    id: 2,
     name: "Setup Your Company",
   },
 ];
@@ -13,39 +9,19 @@ export const formSteps = [
   {
     id: 1,
     docId: 1,
-    label: "Personal Details",
+    stepType: "single",
+    label: "Company Details",
   },
   {
     id: 2,
     docId: 1,
-    label: "Executors",
+    stepType: "multiple",
+    label: "Shareholder Details",
   },
   {
     id: 3,
     docId: 1,
-    label: "Beneficiaries",
-  },
-  {
-    id: 4,
-    docId: 1,
-    label: "Asset Allocation",
-  },
-
-  {
-    id: 5,
-    docId: 2,
-    objName: "companyDetails",
-    label: "Company Details",
-  },
-  {
-    id: 6,
-    docId: 2,
-    objName: "shareholderDetails",
-    label: "Shareholder Details",
-  },
-  {
-    id: 7,
-    docId: 2,
+    stepType: "single",
     label: "Upload Documents",
   },
 ];
@@ -55,73 +31,24 @@ export const stepsHeaders = [
     id: 1,
     stepId: 1,
     docId: 1,
-    heading: "First, we need some details from you",
-    subHeading: [
-      "Please provide the following details so we can build your PDF file",
-      "We will use this information to generate your PDF file",
-    ],
-  },
-  {
-    id: 2,
-    stepId: 2,
-    docId: 1,
-    heading: "Who will be the Executor(s) of your Will.",
-    subHeading: [
-      "The Main Executor is the person appointed to carry out the wishes of this Will.",
-      "An Executor must be over the age of 21, not be a bankrupt and is of sound mind to carry out his or her duties under the Will upon the Testator’s demise. An Executor can also be a Beneficiary under a Will.",
-    ],
-  },
-  {
-    id: 3,
-    docId: 1,
-    stepId: 3,
-    heading: "Who will be the Beneficiary(s) of your Will.",
-    subHeading: [
-      "The Beneficiaries are the people who will benefit from the asset allocation indicated in this will.",
-    ],
-  },
-  {
-    id: 4,
-    stepId: 3,
-    docId: 1,
-    heading:
-      "Beneficiary(s) must be of sound mind to carry out his or her duties under the Will upon the Testator’s demise.",
-    subHeading: ["An Executor can also be a Beneficiary under a Will."],
-  },
-  {
-    id: 5,
-    stepId: 4,
-    docId: 1,
-    heading: "Do you have any property to give to your beneficiaries?",
-    subHeading: [
-      "You can choose to allocate your owned properties (if any) to your beneficiaries.",
-      "This is only applicable for property under single ownership and may not apply for other types of property ownership arrangements.",
-    ],
-  },
-
-  // Document 2
-  {
-    id: 6,
-    stepId: 5,
-    docId: 2,
     heading: "Enter Company Details",
     subHeading: [
       "Please add minimum 1 shareholder details to proceed. You can also invite shareholders to input their details and upload documents",
     ],
   },
   {
-    id: 7,
-    stepId: 6,
-    docId: 2,
+    id: 1,
+    stepId: 2,
+    docId: 1,
     heading: "Enter Shareholder Details",
     subHeading: [
       "Please add minimum 1 shareholder details to proceed. You can also invite shareholders to input their details and upload documents",
     ],
   },
   {
-    id: 8,
-    stepId: 7,
-    docId: 2,
+    id: 1,
+    stepId: 3,
+    docId: 1,
     heading: "Upload Documents",
     subHeading: [
       "Securely submit required documents by uploading them here.  Please ensure all necessary files are attached",
@@ -132,45 +59,51 @@ export const stepsHeaders = [
 export const stepperFields = [
   {
     id: 1,
-    stepId: 5,
-    docId: 2,
-    objName: "companyName",
+    stepId: 1,
+    docId: 1,
     label: "COMPANY NAME OPTIONS",
   },
   {
     id: 2,
-    stepId: 5,
-    docId: 2,
-    objName: "licenseType",
+    stepId: 1,
+    docId: 1,
     label: "LICENSE TYPE",
   },
   {
     id: 3,
-    stepId: 5,
-    docId: 2,
-    objName: "activityDetails",
+    stepId: 1,
+    docId: 1,
     label: "ACTIVITY DETAILS",
   },
   {
     id: 4,
-    stepId: 5,
-    docId: 2,
-    objName: "shareCapitalDetails",
+    stepId: 1,
+    docId: 1,
     label: "SHARE CAPITAL DETAILS",
   },
   {
     id: 5,
-    stepId: 6,
-    docId: 2,
-    objName: "personalDetails",
+    stepId: 2,
+    docId: 1,
     label: "PERSONAL DETAILS",
   },
   {
     id: 6,
-    stepId: 6,
-    docId: 2,
-    objName: "passportDetails",
+    stepId: 2,
+    docId: 1,
     label: "PASSPORT DETAILS",
+  },
+  {
+    id: 7,
+    stepId: 3,
+    docId: 1,
+    label: "Passport",
+  },
+  {
+    id: 8,
+    stepId: 3,
+    docId: 1,
+    label: "Emirates ID card",
   },
 ];
 
@@ -374,6 +307,31 @@ export const stepInputFields = [
     type: "date",
     name: "passportExpiryDate",
     placeholder: "2000/05/31",
+    required: true,
+  },
+  {
+    id: 22,
+    fieldId: 7,
+    label: "Upload Passport",
+    type: "file",
+    name: "passport",
+    required: true,
+  },
+  {
+    id: 23,
+    fieldId: 8,
+    label: "Are you a legal resident of the UAE?",
+    type: "radio",
+    valueOptions: ["Yes.", "No."],
+    name: "isLegalResident",
+    required: true,
+  },
+  {
+    id: 24,
+    fieldId: 8,
+    label: "Upload  Emirates ID card",
+    type: "file",
+    name: "emiratesId",
     required: true,
   },
 ];

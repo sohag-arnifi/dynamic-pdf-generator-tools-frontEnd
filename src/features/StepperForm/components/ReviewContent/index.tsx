@@ -5,7 +5,9 @@ import {
   stepInputFields,
   stepperFields,
 } from "../../../../utils/constants/formSteps";
-import dayjs from "dayjs";
+import DateView from "./DateView";
+import ImageView from "./ImageView";
+import TextView from "./TextView";
 
 interface IReviewContentProps {
   docSteps: {
@@ -81,24 +83,19 @@ const ReviewContent = ({ docSteps }: IReviewContentProps) => {
 
                         return type === "radio" ? (
                           <Grid key={name} item xs={12}>
-                            <Typography sx={{ fontSize: "12px" }}>
-                              {label}
-                            </Typography>
-                            {fieldValue}
+                            <TextView label={label} fieldValue={fieldValue} />
                           </Grid>
                         ) : type === "date" ? (
                           <Grid key={name} item xs={12}>
-                            <Typography sx={{ fontSize: "12px" }}>
-                              {label}
-                            </Typography>
-                            {dayjs(fieldValue).format("DD/MM/YYYY")}
+                            <DateView label={label} fieldValue={fieldValue} />
+                          </Grid>
+                        ) : type === "file" ? (
+                          <Grid key={name} item xs={4}>
+                            <ImageView label={label} fieldValue={fieldValue} />
                           </Grid>
                         ) : (
                           <Grid key={name} item xs={4}>
-                            <Typography sx={{ fontSize: "12px" }}>
-                              {label}
-                            </Typography>
-                            {fieldValue}
+                            <TextView label={label} fieldValue={fieldValue} />
                           </Grid>
                         );
                       })}

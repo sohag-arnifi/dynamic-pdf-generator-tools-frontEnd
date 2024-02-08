@@ -27,9 +27,11 @@ const FormDateInput = ({ name, label }: IFormDateInputProps) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker", "DatePicker"]}>
                 <DatePicker
+                  views={["day", "month", "year"]}
+                  format="DD/MM/YYYY"
                   {...field}
                   label={label}
-                  value={dayjs(field.value)}
+                  value={field.value ? dayjs(field.value) : null}
                   onChange={field.onChange}
                 />
               </DemoContainer>

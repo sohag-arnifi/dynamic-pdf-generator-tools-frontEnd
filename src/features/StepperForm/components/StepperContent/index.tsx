@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import FormSelectField from "../Forms/FormSelectField";
 import FormRadioField from "../Forms/FormRadioField";
 import FormDateInput from "../Forms/FormDateInput";
+import FormFileInput from "../Forms/FormFileInput";
 
 const StepperContent = ({
   activeStep,
@@ -118,7 +119,6 @@ const StepperContent = ({
                     ) : type === "select" ? (
                       <Grid key={i} item xs={4}>
                         <FormSelectField
-                          // name={`${activeStep.objName}.${objName}.${name}`}
                           name={`${activeStep.label}.${content.label}.${name}`}
                           placeholder={placeholder || ""}
                           label={label}
@@ -129,7 +129,6 @@ const StepperContent = ({
                     ) : type === "radio" ? (
                       <Grid key={i} item xs={12}>
                         <FormRadioField
-                          // name={`${activeStep.objName}.${objName}.${name}`}
                           name={`${activeStep.label}.${content.label}.${name}`}
                           label={label}
                           required={required}
@@ -139,9 +138,17 @@ const StepperContent = ({
                     ) : type === "date" ? (
                       <Grid key={i} item xs={12}>
                         <FormDateInput
-                          // name={`${activeStep.objName}.${objName}.${name}`}
                           name={`${activeStep.label}.${content.label}.${name}`}
                           type={type}
+                          placeholder={placeholder || ""}
+                          label={label}
+                          required={required}
+                        />
+                      </Grid>
+                    ) : type === "file" ? (
+                      <Grid key={i} item xs={12}>
+                        <FormFileInput
+                          name={`${activeStep.label}.${content.label}.${name}`}
                           placeholder={placeholder || ""}
                           label={label}
                           required={required}

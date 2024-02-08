@@ -14,12 +14,10 @@ const StepperForm = () => {
     return storedStepperStep ? parseInt(storedStepperStep) : 0;
   });
 
-  const selectedDocId = 2;
+  const selectedDocId = 1;
   const selectedDoc = documents.find((doc) => doc.id === selectedDocId);
   const docSteps = formSteps.filter((step) => step.docId === selectedDocId);
   const activeStep = docSteps.find((_, i) => i === stepperStep);
-
-  console.log(activeStep);
 
   const submitHandler = (data: FieldValues) => {
     if (stepperStep !== docSteps.length) {
@@ -61,6 +59,7 @@ const StepperForm = () => {
                 docId: number;
                 objName: string;
                 label: string;
+                stepType: string;
               }
             }
           />
