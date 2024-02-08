@@ -1,7 +1,11 @@
-import { Box, Card, IconButton, Typography } from "@mui/material";
+import { Box, Card, Grid, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useFormContext } from "react-hook-form";
-import { stepFields } from "../../../../utils/constants/formSteps";
+import {
+  stepInputFields,
+  stepperFields,
+} from "../../../../utils/constants/formSteps";
+import dayjs from "dayjs";
 
 interface IReviewContentProps {
   docSteps: {
@@ -14,12 +18,15 @@ interface IReviewContentProps {
 const ReviewContent = ({ docSteps }: IReviewContentProps) => {
   const { watch } = useFormContext();
   const formValues = watch();
-  console.log(formValues);
 
   return (
     <Box marginY={"50px"} sx={{ minHeight: "60vh" }}>
       {docSteps?.map((step, i) => {
-        const stepValue = formValues[step?.id];
+        const stepFieldValues = formValues[step.label];
+
+        const fields = stepperFields?.filter(
+          (field) => field.stepId === step.id
+        );
 
         return (
           <Card
@@ -46,20 +53,56 @@ const ReviewContent = ({ docSteps }: IReviewContentProps) => {
               </IconButton>
             </Box>
 
-            {stepValue &&
-              Object?.keys(stepValue).length > 0 &&
-              Object?.keys(stepValue)?.map((key) => {
-                const stepField = stepFields.find(
-                  (field) => field.name === key
+            {fields?.length > 0 &&
+              fields?.map((stepField, i) => {
+                const fieldInput = stepInputFields?.filter(
+                  (input) => input.fieldId === stepField.id
                 );
+
                 return (
-                  <Box key={key} display={"flex"} marginY={"20px"}>
-                    <Typography sx={{ width: "150px" }}>
-                      {stepField?.label}:{" "}
+                  <Box marginTop="16px" key={i}>
+                    <Typography
+                      gutterBottom
+                      variant="body1"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {stepField.label}
                     </Typography>
-                    <Typography sx={{ marginLeft: "10px" }}>
-                      {stepValue[key]}
-                    </Typography>
+
+                    <Grid container spacing={4}>
+                      {fieldInput?.map((field) => {
+                        const { name, type, label } = field;
+
+                        const fieldValue =
+                          stepFieldValues[stepField.label][name];
+
+                        return type === "radio" ? (
+                          <Grid key={name} item xs={12}>
+                            <Typography sx={{ fontSize: "12px" }}>
+                              {label}
+                            </Typography>
+                            {fieldValue}
+                          </Grid>
+                        ) : type === "date" ? (
+                          <Grid key={name} item xs={12}>
+                            <Typography sx={{ fontSize: "12px" }}>
+                              {label}
+                            </Typography>
+                            {dayjs(fieldValue).format("DD/MM/YYYY")}
+                          </Grid>
+                        ) : (
+                          <Grid key={name} item xs={4}>
+                            <Typography sx={{ fontSize: "12px" }}>
+                              {label}
+                            </Typography>
+                            {fieldValue}
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
                   </Box>
                 );
               })}

@@ -56,7 +56,12 @@ const StepperForm = () => {
         ) : (
           <StepperContent
             activeStep={
-              activeStep as { id: number; docId: number; objName: string }
+              activeStep as {
+                id: number;
+                docId: number;
+                objName: string;
+                label: string;
+              }
             }
           />
         )}

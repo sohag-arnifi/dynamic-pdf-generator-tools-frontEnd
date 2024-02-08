@@ -36,7 +36,7 @@ const FormRadioField = ({
                 {...field}
                 aria-labelledby={name}
                 name={name}
-                value={field.value || valueOptions[0]}
+                value={field.value}
               >
                 {valueOptions.map((option, i) => (
                   <FormControlLabel

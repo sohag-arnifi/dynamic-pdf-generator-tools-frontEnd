@@ -13,7 +13,7 @@ import FormDateInput from "../Forms/FormDateInput";
 const StepperContent = ({
   activeStep,
 }: {
-  activeStep: { id: number; docId: number; objName: string };
+  activeStep: { id: number; docId: number; objName: string; label: string };
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -26,12 +26,6 @@ const StepperContent = ({
     (content) =>
       content.stepId === activeStep.id && content.docId === activeStep.docId
   );
-
-  console.log(stepContent);
-
-  // const stepInputFields = stepFields.filter(
-  //   (field) => field.stepId === activeStepId
-  // );
 
   useEffect(() => {
     setLoading(true);
@@ -89,7 +83,7 @@ const StepperContent = ({
       {stepContent.length > 0 ? (
         <Card sx={{ marginX: "20px", padding: "20px" }} variant="outlined">
           {stepContent?.map((content, i) => {
-            const { id, label, objName } = content;
+            const { id, label } = content;
 
             const inputFields = stepInputFields.filter(
               (field) => field.fieldId === id
@@ -114,7 +108,7 @@ const StepperContent = ({
                       type === "number" ? (
                       <Grid key={i} item xs={4}>
                         <FormTextInput
-                          name={`${activeStep.objName}.${objName}.${name}`}
+                          name={`${activeStep.label}.${content.label}.${name}`}
                           type={type}
                           placeholder={placeholder || ""}
                           label={label}
@@ -124,7 +118,8 @@ const StepperContent = ({
                     ) : type === "select" ? (
                       <Grid key={i} item xs={4}>
                         <FormSelectField
-                          name={`${activeStep.objName}.${objName}.${name}`}
+                          // name={`${activeStep.objName}.${objName}.${name}`}
+                          name={`${activeStep.label}.${content.label}.${name}`}
                           placeholder={placeholder || ""}
                           label={label}
                           required={required}
@@ -134,7 +129,8 @@ const StepperContent = ({
                     ) : type === "radio" ? (
                       <Grid key={i} item xs={12}>
                         <FormRadioField
-                          name={`${activeStep.objName}.${objName}.${name}`}
+                          // name={`${activeStep.objName}.${objName}.${name}`}
+                          name={`${activeStep.label}.${content.label}.${name}`}
                           label={label}
                           required={required}
                           valueOptions={valueOptions || []}
@@ -143,7 +139,8 @@ const StepperContent = ({
                     ) : type === "date" ? (
                       <Grid key={i} item xs={12}>
                         <FormDateInput
-                          name={`${activeStep.objName}.${objName}.${name}`}
+                          // name={`${activeStep.objName}.${objName}.${name}`}
+                          name={`${activeStep.label}.${content.label}.${name}`}
                           type={type}
                           placeholder={placeholder || ""}
                           label={label}
