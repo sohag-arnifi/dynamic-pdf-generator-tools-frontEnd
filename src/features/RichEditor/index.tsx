@@ -11,10 +11,11 @@ import { MuiContentEditable, placeHolderSx } from "./Styles/MuiContentEditable";
 import { Box } from "@mui/material";
 import Toolbar from "./Tools";
 import "./Styles/LexicalThemeStyle.css";
-import editorConfig from "./config";
+import editorConfig from "./Config";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import MentionsVarible from "./Plugin/MentionsVariable";
 
 function MyCustomAutoFocusPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -31,7 +32,6 @@ const ArnifiRichEditor = () => {
     editorState.read(() => {
       const root = $getRoot();
       const selection = $getSelection();
-
       console.log(root, selection);
     });
   }
@@ -53,6 +53,7 @@ const ArnifiRichEditor = () => {
 
         <ListPlugin />
         <LinkPlugin />
+        <MentionsVarible />
       </Box>
     </LexicalComposer>
   );

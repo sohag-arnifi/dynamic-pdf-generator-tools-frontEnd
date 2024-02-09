@@ -5,6 +5,8 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { TableNode, TableCellNode, TableRowNode } from "@lexical/table";
 import { ListNode, ListItemNode } from "@lexical/list";
+import { BeautifulMentionNode } from "lexical-beautiful-mentions";
+import MentionsTheme from "../Theme/MentionsTheme";
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -15,7 +17,7 @@ function onError(error: Error) {
 
 const editorConfig = {
   namespace: "MyEditor",
-  theme: LexicalEditorTheme,
+  theme: { ...LexicalEditorTheme, beautifulMentions: MentionsTheme },
   onError,
   nodes: [
     HeadingNode,
@@ -29,6 +31,7 @@ const editorConfig = {
     TableRowNode,
     AutoLinkNode,
     LinkNode,
+    BeautifulMentionNode,
   ],
 };
 
