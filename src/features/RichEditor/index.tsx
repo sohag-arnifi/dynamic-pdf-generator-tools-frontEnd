@@ -1,9 +1,7 @@
-import { $getRoot, $getSelection } from "lexical";
+import { $generateHtmlFromNodes } from "@lexical/html";
 import { useEffect } from "react";
-
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -14,12 +12,10 @@ import "./Styles/LexicalThemeStyle.css";
 import editorConfig from "./Config";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import MentionsVarible from "./Plugin/MentionsVariable";
 
 function MyCustomAutoFocusPlugin() {
   const [editor] = useLexicalComposerContext();
-
   useEffect(() => {
     editor.focus();
   }, [editor]);
@@ -27,15 +23,20 @@ function MyCustomAutoFocusPlugin() {
   return null;
 }
 
-const ArnifiRichEditor = () => {
-  function onChange(editorState: { read: (arg0: () => void) => void }) {
-    editorState.read(() => {
-      const root = $getRoot();
-      const selection = $getSelection();
-      console.log(root, selection);
-    });
-  }
+const ConvertToHtmlPlugin = () => {
+  const [editor] = useLexicalComposerContext();
 
+  editor.registerUpdateListener(({ editorState }) => {
+    editorState.read(() => {
+      const tmp = $generateHtmlFromNodes(editor);
+      console.log(tmp);
+    });
+  });
+
+  return null;
+};
+
+const ArnifiRichEditor = () => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <Toolbar />
@@ -47,13 +48,11 @@ const ArnifiRichEditor = () => {
         />
         <HistoryPlugin />
         <MyCustomAutoFocusPlugin />
-
-        <OnChangePlugin onChange={onChange} />
         <HistoryPlugin />
-
         <ListPlugin />
         <LinkPlugin />
         <MentionsVarible />
+        <ConvertToHtmlPlugin />
       </Box>
     </LexicalComposer>
   );
