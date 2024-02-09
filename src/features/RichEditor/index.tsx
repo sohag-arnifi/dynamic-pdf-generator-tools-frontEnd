@@ -14,6 +14,8 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import MentionsVarible from "./Plugin/MentionsVariable";
 import { $getRoot, $insertNodes } from "lexical";
+import Form from "../StepperForm/components/Forms";
+import { useFormContext } from "react-hook-form";
 
 function MyCustomAutoFocusPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -24,23 +26,17 @@ function MyCustomAutoFocusPlugin() {
   return null;
 }
 
-const ConvertToHtmlPlugin = () => {
+const ConvertToHtmlPlugin = ({ docName }: { docName: string }) => {
   const [editor] = useLexicalComposerContext();
-
-  editor.registerUpdateListener(({ editorState }) => {
-    editorState.read(() => {
-      const tmp = $generateHtmlFromNodes(editor);
-      localStorage.setItem("html-temp", tmp);
-    });
-  });
-
-  const htmlString = localStorage.getItem("html-temp");
+  const { setValue, getValues } = useFormContext();
+  const value = getValues(docName);
 
   useEffect(() => {
-    if (htmlString) {
+    const selectedTemplates = localStorage.getItem(docName);
+    if (selectedTemplates) {
       editor.update(() => {
         const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlString, "text/html");
+        const dom = parser.parseFromString(value, "text/html");
         const nodes = $generateNodesFromDOM(editor, dom);
         const root = $getRoot();
 
@@ -50,30 +46,45 @@ const ConvertToHtmlPlugin = () => {
         $insertNodes(nodes);
       });
     }
-  }, [editor, htmlString]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  editor.registerUpdateListener(({ editorState }) => {
+    editorState.read(() => {
+      const tmp = $generateHtmlFromNodes(editor);
+
+      return setValue(docName, tmp);
+    });
+  });
 
   return null;
 };
 
-const ArnifiRichEditor = () => {
+const ArnifiRichEditor = ({
+  selectedDoc,
+}: {
+  selectedDoc: { id: number; name: string };
+}) => {
   return (
-    <LexicalComposer initialConfig={editorConfig}>
-      <Toolbar />
-      <MyCustomAutoFocusPlugin />
-      <Box sx={{ position: "relative" }}>
-        <RichTextPlugin
-          contentEditable={<MuiContentEditable />}
-          placeholder={<Box sx={placeHolderSx}>Enter some text...</Box>}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <HistoryPlugin />
-        <HistoryPlugin />
-        <ListPlugin />
-        <LinkPlugin />
-        <MentionsVarible />
-        <ConvertToHtmlPlugin />
-      </Box>
-    </LexicalComposer>
+    <Form submitHandler={() => console.log("submit")}>
+      <LexicalComposer initialConfig={editorConfig}>
+        <Toolbar />
+        <MyCustomAutoFocusPlugin />
+        <Box sx={{ position: "relative" }}>
+          <RichTextPlugin
+            contentEditable={<MuiContentEditable />}
+            placeholder={<Box sx={placeHolderSx}>Enter some text...</Box>}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <HistoryPlugin />
+          <HistoryPlugin />
+          <ListPlugin />
+          <LinkPlugin />
+          <MentionsVarible docId={selectedDoc.id} />
+          <ConvertToHtmlPlugin docName={selectedDoc.name} />
+        </Box>
+      </LexicalComposer>
+    </Form>
   );
 };
 

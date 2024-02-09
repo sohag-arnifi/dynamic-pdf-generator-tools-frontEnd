@@ -4,9 +4,10 @@ import StepLabel from "@mui/material/StepLabel";
 import React from "react";
 import { documents, formSteps } from "../../utils/constants/formSteps";
 import StepperContent from "./components/StepperContent";
-import Form from "./components/Forms";
+// import Form from "./Forms";
 import { FieldValues } from "react-hook-form";
 import ReviewContent from "./components/ReviewContent";
+import Form from "./components/Forms";
 
 const StepperForm = ({ selectedDocId }: { selectedDocId: number }) => {
   const [stepperStep, setStepperStep] = React.useState(() => {

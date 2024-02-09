@@ -4,12 +4,12 @@ import {
   stepperFields,
   stepsHeaders,
 } from "../../../../utils/constants/formSteps";
-import FormTextInput from "../Forms/FormTextInput";
+import FormTextInput from "../../components/Forms/FormTextInput";
 import { useEffect, useState } from "react";
-import FormSelectField from "../Forms/FormSelectField";
-import FormRadioField from "../Forms/FormRadioField";
-import FormDateInput from "../Forms/FormDateInput";
-import FormFileInput from "../Forms/FormFileInput";
+import FormSelectField from "../../components/Forms/FormSelectField";
+import FormRadioField from "../../components/Forms/FormRadioField";
+import FormDateInput from "../../components/Forms/FormDateInput";
+import FormFileInput from "../../components/Forms/FormFileInput";
 
 const StepperContent = ({
   activeStep,

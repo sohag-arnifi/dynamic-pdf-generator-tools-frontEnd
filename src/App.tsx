@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { documents } from "./utils/constants/formSteps";
 
 function App() {
@@ -17,6 +17,43 @@ function App() {
     return storedSelectedDoc ? JSON.parse(storedSelectedDoc) : "";
   });
   const [showForm, setShowForm] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [selectedDoc]);
+
+  const Loader = () => {
+    return (
+      <Box
+        marginY={"50px"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        sx={{ minHeight: "60vh" }}
+      >
+        <Typography variant="h4">Loading...</Typography>
+      </Box>
+    );
+  };
+  // if (loading) {
+  //   return (
+  //     <Box
+  //       marginY={"50px"}
+  //       display={"flex"}
+  //       justifyContent={"center"}
+  //       alignItems={"center"}
+  //       sx={{ minHeight: "60vh" }}
+  //     >
+  //       <Typography variant="h4">Loading...</Typography>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <div
@@ -126,23 +163,11 @@ function App() {
           ) : (
             <StepperForm selectedDocId={selectedDoc?.id} />
           )
+        ) : loading ? (
+          <Loader />
         ) : (
-          <ArnifiRichEditor />
+          <ArnifiRichEditor selectedDoc={selectedDoc} />
         )}
-        {/* {!selectedDoc ? (
-          <Box>
-            <Typography
-              variant="h5"
-              sx={{ padding: "20px", fontWeight: "bold", textAlign: "center" }}
-            >
-              No document selected!
-            </Typography>
-          </Box>
-        ) : (
-          <StepperForm selectedDocId={selectedDoc?.id} />
-        )} */}
-        {/* <RechEditor /> */}
-        {/* <ArnifiRichEditor /> */}
       </main>
     </div>
   );

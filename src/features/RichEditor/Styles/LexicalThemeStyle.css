@@ -155,3 +155,8 @@
 .mention-variable {
   font-weight: bold;
 }
+
+.mention-trigger {
+  color: #666;
+  font-weight: bold;
+}
