@@ -1,4 +1,4 @@
-import { $generateHtmlFromNodes } from "@lexical/html";
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
 import { useEffect } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -13,6 +13,7 @@ import editorConfig from "./Config";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import MentionsVarible from "./Plugin/MentionsVariable";
+import { $getRoot, $insertNodes } from "lexical";
 
 function MyCustomAutoFocusPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -29,9 +30,27 @@ const ConvertToHtmlPlugin = () => {
   editor.registerUpdateListener(({ editorState }) => {
     editorState.read(() => {
       const tmp = $generateHtmlFromNodes(editor);
-      console.log(tmp);
+      localStorage.setItem("html-temp", tmp);
     });
   });
+
+  const htmlString = localStorage.getItem("html-temp");
+
+  useEffect(() => {
+    if (htmlString) {
+      editor.update(() => {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlString, "text/html");
+        const nodes = $generateNodesFromDOM(editor, dom);
+        const root = $getRoot();
+
+        if (!root.isEmpty()) {
+          root.clear();
+        }
+        $insertNodes(nodes);
+      });
+    }
+  }, [editor, htmlString]);
 
   return null;
 };
@@ -40,6 +59,7 @@ const ArnifiRichEditor = () => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <Toolbar />
+      <MyCustomAutoFocusPlugin />
       <Box sx={{ position: "relative" }}>
         <RichTextPlugin
           contentEditable={<MuiContentEditable />}
@@ -47,7 +67,6 @@ const ArnifiRichEditor = () => {
           ErrorBoundary={LexicalErrorBoundary}
         />
         <HistoryPlugin />
-        <MyCustomAutoFocusPlugin />
         <HistoryPlugin />
         <ListPlugin />
         <LinkPlugin />
