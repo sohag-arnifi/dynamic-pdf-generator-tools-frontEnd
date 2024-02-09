@@ -8,15 +8,12 @@ import FormatAlignLeftOutlinedIcon from "@mui/icons-material/FormatAlignLeftOutl
 import FormatAlignRightOutlinedIcon from "@mui/icons-material/FormatAlignRightOutlined";
 import FormatAlignJustifyOutlinedIcon from "@mui/icons-material/FormatAlignJustifyOutlined";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
-import FormatHeader1 from "mdi-material-ui/FormatHeader1";
-import FormatHeader2 from "mdi-material-ui/FormatHeader2";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import FormatText from "mdi-material-ui/FormatText";
 import CodeIcon from "@mui/icons-material/Code";
 import ImageIcon from "@mui/icons-material/Image";
 
-export const eventTypes = {
+export const eventTypes: { [key: string]: string } = {
   paragraph: "paragraph",
   h1: "h1",
   h2: "h2",
@@ -37,99 +34,132 @@ export const eventTypes = {
   insertImage: "insertImage",
 };
 
-const pluginsList = [
+const pluginsList: {
+  id: number;
+  icon: JSX.Element;
+  event: string;
+}[] = [
+  {
+    id: 8,
+    icon: <UndoOutlinedIcon />,
+    event: eventTypes.formatUndo,
+  },
+  {
+    id: 9,
+    icon: <RedoOutlinedIcon />,
+    event: eventTypes.formatRedo,
+  },
   {
     id: 1,
-    Icon: FormatText,
+    icon: (
+      <p
+        style={{
+          fontSize: "20px",
+          width: "20px",
+          height: "20px",
+          fontWeight: "600",
+        }}
+      >
+        T
+      </p>
+    ),
     event: eventTypes.paragraph,
   },
   {
     id: 2,
-    Icon: FormatHeader1,
+    icon: (
+      <p
+        style={{
+          fontSize: "20px",
+          width: "20px",
+          height: "20px",
+          fontWeight: "600",
+        }}
+      >
+        H1
+      </p>
+    ),
     event: eventTypes.h1,
   },
   {
     id: 3,
-    Icon: FormatHeader2,
+    icon: (
+      <p
+        style={{
+          fontSize: "20px",
+          width: "20px",
+          height: "20px",
+          fontWeight: "600",
+        }}
+      >
+        H2
+      </p>
+    ),
     event: eventTypes.h2,
   },
   {
     id: 4,
-    Icon: FormatListBulletedIcon,
+    icon: <FormatListBulletedIcon />,
     event: eventTypes.ul,
   },
 
   {
     id: 5,
-    Icon: FormatListNumberedIcon,
+    icon: <FormatListNumberedIcon />,
     event: eventTypes.ol,
   },
   {
-    id: 6,
-    Icon: FormatQuoteIcon,
-    event: eventTypes.quote,
-  },
-
-  {
-    id: 7,
-    Icon: CodeIcon,
-    event: eventTypes.formatCode,
-  },
-  {
-    id: 8,
-    Icon: UndoOutlinedIcon,
-    event: eventTypes.formatUndo,
-  },
-  {
-    id: 9,
-    Icon: RedoOutlinedIcon,
-    event: eventTypes.formatRedo,
-  },
-  {
     id: 10,
-    Icon: FormatBoldOutlinedIcon,
+    icon: <FormatBoldOutlinedIcon />,
     event: eventTypes.formatBold,
   },
   {
     id: 11,
-    Icon: FormatItalicOutlinedIcon,
+    icon: <FormatItalicOutlinedIcon />,
     event: eventTypes.formatItalic,
   },
   {
     id: 12,
-    Icon: FormatUnderlinedOutlinedIcon,
+    icon: <FormatUnderlinedOutlinedIcon />,
     event: eventTypes.formatUnderline,
-  },
-  // { // reactive it if you need it
-  //   id: 13,
-  //   Icon: StrikethroughSOutlinedIcon,
-  //   event: eventTypes.formatStrike,
-  // },
-  {
-    id: 13,
-    Icon: ImageIcon,
-    event: eventTypes.insertImage,
-  },
-  {
-    id: 14,
-    Icon: InsertLinkOutlinedIcon,
-    event: eventTypes.formatInsertLink,
   },
   {
     id: 15,
-    Icon: FormatAlignLeftOutlinedIcon,
+    icon: <FormatAlignLeftOutlinedIcon />,
     event: eventTypes.formatAlignLeft,
   },
 
   {
     id: 16,
-    Icon: FormatAlignJustifyOutlinedIcon,
+    icon: <FormatAlignJustifyOutlinedIcon />,
     event: eventTypes.formatAlignCenter,
   },
   {
     id: 17,
-    Icon: FormatAlignRightOutlinedIcon,
+    icon: <FormatAlignRightOutlinedIcon />,
     event: eventTypes.formatAlignRight,
+  },
+  {
+    id: 6,
+    icon: <FormatQuoteIcon />,
+    event: eventTypes.quote,
+  },
+
+  {
+    id: 7,
+    icon: <CodeIcon />,
+    event: eventTypes.formatCode,
+  },
+
+  {
+    id: 13,
+    icon: <ImageIcon />,
+    event: eventTypes.insertImage,
+  },
+  {
+    id: 14,
+    icon: <InsertLinkOutlinedIcon />,
+    event: eventTypes.formatInsertLink,
   },
 ];
 

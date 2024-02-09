@@ -1,6 +1,13 @@
 import StepperForm from "./features/StepperForm/intex";
 import ArnifiRichEditor from "./features/RichEditor";
-import { Box, MenuItem, Select, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { documents } from "./utils/constants/formSteps";
 
@@ -9,6 +16,7 @@ function App() {
     const storedSelectedDoc = localStorage.getItem("selected-doc");
     return storedSelectedDoc ? JSON.parse(storedSelectedDoc) : "";
   });
+  const [showForm, setShowForm] = useState(true);
 
   return (
     <div
@@ -55,7 +63,6 @@ function App() {
               return selectedDoc?.name;
             }}
           >
-            {/* <MenuItem value={""}>Select Document from the list</MenuItem> */}
             {documents?.map((doc) => (
               <MenuItem key={doc.id} value={JSON.stringify(doc)}>
                 {doc.name}
@@ -63,6 +70,33 @@ function App() {
             ))}
           </Select>
         </Box>
+      </Box>
+
+      <Box marginY={"20px"}>
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            onClick={() => setShowForm(true)}
+            color={showForm ? "error" : "primary"}
+            variant="contained"
+          >
+            Dynamic Form
+          </Button>
+          <Button
+            onClick={() => setShowForm(false)}
+            color={!showForm ? "error" : "primary"}
+            variant="contained"
+          >
+            Dynamic Template
+          </Button>
+        </Stack>
       </Box>
 
       <main
@@ -75,7 +109,27 @@ function App() {
           padding: "20px",
         }}
       >
-        {!selectedDoc ? (
+        {showForm ? (
+          !selectedDoc ? (
+            <Box>
+              <Typography
+                variant="h5"
+                sx={{
+                  padding: "20px",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                No document selected!
+              </Typography>
+            </Box>
+          ) : (
+            <StepperForm selectedDocId={selectedDoc?.id} />
+          )
+        ) : (
+          <ArnifiRichEditor />
+        )}
+        {/* {!selectedDoc ? (
           <Box>
             <Typography
               variant="h5"
@@ -86,7 +140,7 @@ function App() {
           </Box>
         ) : (
           <StepperForm selectedDocId={selectedDoc?.id} />
-        )}
+        )} */}
         {/* <RechEditor /> */}
         {/* <ArnifiRichEditor /> */}
       </main>

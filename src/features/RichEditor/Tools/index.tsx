@@ -1,7 +1,10 @@
 import { Box, IconButton } from "@mui/material";
 import pluginsList from "./toolsIconList";
+import useOnClickListener from "./useOnClickListener";
 
 const Toolbar = () => {
+  const { onClick } = useOnClickListener();
+
   return (
     <Box
       sx={{
@@ -12,9 +15,13 @@ const Toolbar = () => {
       }}
     >
       <Box>
-        {pluginsList.map(({ id, Icon, event }) => (
-          <IconButton key={id} onClick={() => console.log(event)}>
-            <Icon />
+        {pluginsList.map((plugin) => (
+          <IconButton
+            sx={{ marginX: "5px" }}
+            key={plugin.id}
+            onClick={() => onClick(plugin.event)}
+          >
+            {plugin.icon}
           </IconButton>
         ))}
       </Box>
