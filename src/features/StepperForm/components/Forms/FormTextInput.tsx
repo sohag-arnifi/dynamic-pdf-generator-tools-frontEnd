@@ -19,7 +19,7 @@ const FormTextInput = ({
   const { control } = useFormContext();
 
   return (
-    <Box width={"100%"}>
+    <Box maxWidth={"400px"}>
       <Controller
         control={control}
         name={name}

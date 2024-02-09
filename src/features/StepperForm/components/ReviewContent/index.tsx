@@ -71,15 +71,14 @@ const ReviewContent = ({ docSteps }: IReviewContentProps) => {
                         fontWeight: "600",
                       }}
                     >
-                      {stepField.label}
+                      {stepField?.label}
                     </Typography>
 
                     <Grid container spacing={4}>
                       {fieldInput?.map((field) => {
                         const { name, type, label } = field;
 
-                        const fieldValue =
-                          stepFieldValues[stepField.label][name];
+                        const fieldValue = stepFieldValues[name];
 
                         return type === "radio" ? (
                           <Grid key={name} item xs={12}>

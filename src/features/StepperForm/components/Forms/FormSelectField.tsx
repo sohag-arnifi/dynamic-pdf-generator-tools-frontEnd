@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface IFormSelectFieldProps {
@@ -13,6 +13,7 @@ const FormSelectField = ({
   name,
   placeholder,
   required,
+  label,
   valueOptions,
 }: IFormSelectFieldProps) => {
   const { control } = useFormContext();
@@ -23,31 +24,37 @@ const FormSelectField = ({
         name={name}
         render={({ field }) => {
           return (
-            <Select
-              sx={{
-                width: "100%",
-              }}
-              {...field}
-              required={required}
-              displayEmpty
-              name={name}
-              value={field.value || ""}
-              onChange={field.onChange}
-              onBlur={field.onBlur}
-              inputProps={{ "aria-label": "Without label" }}
-              renderValue={() => {
-                if (!field.value) {
-                  return placeholder;
-                }
-                return field.value;
-              }}
-            >
-              {valueOptions?.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id={name}>{label}</InputLabel>
+
+              <Select
+                id={name}
+                label={label}
+                sx={{
+                  width: "100%",
+                }}
+                {...field}
+                required={required}
+                displayEmpty
+                name={name}
+                value={field.value || ""}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                inputProps={{ "aria-label": "Without label" }}
+                renderValue={() => {
+                  if (!field.value) {
+                    return placeholder;
+                  }
+                  return field.value;
+                }}
+              >
+                {valueOptions?.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           );
         }}
       />

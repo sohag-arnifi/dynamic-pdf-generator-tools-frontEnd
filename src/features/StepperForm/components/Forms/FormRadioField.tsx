@@ -32,6 +32,9 @@ const FormRadioField = ({
             <FormControl>
               <FormLabel id={name}>{label}</FormLabel>
               <RadioGroup
+                sx={{
+                  maxwWdth: "270px",
+                }}
                 row
                 {...field}
                 aria-labelledby={name}

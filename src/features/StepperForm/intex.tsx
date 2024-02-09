@@ -8,13 +8,12 @@ import Form from "./components/Forms";
 import { FieldValues } from "react-hook-form";
 import ReviewContent from "./components/ReviewContent";
 
-const StepperForm = () => {
+const StepperForm = ({ selectedDocId }: { selectedDocId: number }) => {
   const [stepperStep, setStepperStep] = React.useState(() => {
     const storedStepperStep = localStorage.getItem("active-step");
     return storedStepperStep ? parseInt(storedStepperStep) : 0;
   });
 
-  const selectedDocId = 1;
   const selectedDoc = documents.find((doc) => doc.id === selectedDocId);
   const docSteps = formSteps.filter((step) => step.docId === selectedDocId);
   const activeStep = docSteps.find((_, i) => i === stepperStep);

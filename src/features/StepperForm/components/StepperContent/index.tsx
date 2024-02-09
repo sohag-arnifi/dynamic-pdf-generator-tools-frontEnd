@@ -92,7 +92,7 @@ const StepperContent = ({
 
             return (
               <Box marginBottom={"50px"} sx={{ paddingX: "20px" }} key={i}>
-                <Divider textAlign="left">{label}</Divider>
+                {label && <Divider textAlign="left">{label}</Divider>}
                 <Grid marginY={"20px"} container spacing={2}>
                   {inputFields?.map((inputField, i) => {
                     const {
@@ -102,14 +102,15 @@ const StepperContent = ({
                       type,
                       required,
                       valueOptions,
+                      width,
                     } = inputField;
 
                     return type === "text" ||
                       type === "email" ||
                       type === "number" ? (
-                      <Grid key={i} item xs={4}>
+                      <Grid key={i} item xs={width ?? 4}>
                         <FormTextInput
-                          name={`${activeStep.label}.${content.label}.${name}`}
+                          name={`${activeStep.label}.${name}`}
                           type={type}
                           placeholder={placeholder || ""}
                           label={label}
@@ -117,9 +118,9 @@ const StepperContent = ({
                         />
                       </Grid>
                     ) : type === "select" ? (
-                      <Grid key={i} item xs={4}>
+                      <Grid key={i} item xs={width ?? 4}>
                         <FormSelectField
-                          name={`${activeStep.label}.${content.label}.${name}`}
+                          name={`${activeStep.label}.${name}`}
                           placeholder={placeholder || ""}
                           label={label}
                           required={required}
@@ -127,18 +128,18 @@ const StepperContent = ({
                         />
                       </Grid>
                     ) : type === "radio" ? (
-                      <Grid key={i} item xs={12}>
+                      <Grid key={i} item xs={width ?? 4}>
                         <FormRadioField
-                          name={`${activeStep.label}.${content.label}.${name}`}
+                          name={`${activeStep.label}.${name}`}
                           label={label}
                           required={required}
                           valueOptions={valueOptions || []}
                         />
                       </Grid>
                     ) : type === "date" ? (
-                      <Grid key={i} item xs={12}>
+                      <Grid key={i} item xs={width ?? 4}>
                         <FormDateInput
-                          name={`${activeStep.label}.${content.label}.${name}`}
+                          name={`${activeStep.label}.${name}`}
                           type={type}
                           placeholder={placeholder || ""}
                           label={label}
@@ -146,9 +147,9 @@ const StepperContent = ({
                         />
                       </Grid>
                     ) : type === "file" ? (
-                      <Grid key={i} item xs={12}>
+                      <Grid key={i} item xs={width ?? 4}>
                         <FormFileInput
-                          name={`${activeStep.label}.${content.label}.${name}`}
+                          name={`${activeStep.label}.${name}`}
                           placeholder={placeholder || ""}
                           label={label}
                           required={required}

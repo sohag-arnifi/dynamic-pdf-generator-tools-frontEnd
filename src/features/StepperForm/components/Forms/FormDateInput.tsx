@@ -18,7 +18,7 @@ const FormDateInput = ({ name, label }: IFormDateInputProps) => {
   const { control } = useFormContext();
 
   return (
-    <Box width={"100%"}>
+    <Box marginTop={"-8px"} minWidth={"270px"}>
       <Controller
         control={control}
         name={name}
@@ -27,6 +27,7 @@ const FormDateInput = ({ name, label }: IFormDateInputProps) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker", "DatePicker"]}>
                 <DatePicker
+                  sx={{ width: "100%" }}
                   views={["day", "month", "year"]}
                   format="DD/MM/YYYY"
                   {...field}
