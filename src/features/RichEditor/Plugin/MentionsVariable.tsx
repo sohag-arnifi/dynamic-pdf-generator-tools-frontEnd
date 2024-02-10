@@ -53,10 +53,11 @@ const MentionsVarible = ({ docId }: { docId: number }) => {
   >(({ item, ...props }, ref) => {
     return (
       <li className="mention-tigger" {...props} ref={ref}>
-        <span>{item.value}</span>
+        {item.value}
       </li>
     );
   });
+
   const mentionItems = {
     "@": getVariableKeys(docId).map((item) => item.label),
   };

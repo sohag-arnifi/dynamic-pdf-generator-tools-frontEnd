@@ -7,6 +7,10 @@ export const documents = [
     id: 2,
     name: "Legal Draft Will",
   },
+  {
+    id: 3,
+    name: "Agrement - PDF",
+  },
 ];
 
 export const formSteps = [
@@ -45,6 +49,12 @@ export const formSteps = [
     docId: 2,
     stepType: "single",
     label: "Beneficiaries",
+  },
+  {
+    id: 7,
+    docId: 3,
+    stepType: "single",
+    label: "Example Agrement Step",
   },
 ];
 
@@ -101,6 +111,13 @@ export const stepsHeaders = [
     subHeading: [
       "The Beneficiaries are the people who will benefit from the asset allocation indicated in this will.",
     ],
+  },
+  {
+    id: 7,
+    stepId: 7,
+    docId: 3,
+    heading: "Example Agrement Step Headeng",
+    subHeading: ["Example"],
   },
 ];
 
@@ -188,6 +205,12 @@ export const stepperFields = [
     stepId: 6,
     docId: 2,
     label: "Address",
+  },
+  {
+    id: 15,
+    stepId: 7,
+    docId: 3,
+    label: "Example Agrement",
   },
 ];
 
@@ -713,8 +736,53 @@ export const stepInputFields = [
     required: true,
     width: 3,
   },
+  {
+    id: 52,
+    fieldId: 15,
+    label: "Company Name 1",
+    type: "text",
+    name: "companyNam1",
+    placeholder: "Company Name",
+    required: true,
+    width: 4,
+  },
+
+  {
+    id: 54,
+    fieldId: 15,
+    label: "Jurisdiction",
+    type: "text",
+    name: "jurisdiction",
+    placeholder: "Jurisdiction Name",
+    required: true,
+    width: 4,
+  },
+
+  {
+    id: 55,
+    fieldId: 15,
+    label: "License Number",
+    type: "text",
+    name: "licenseNumber",
+    placeholder: "License Number",
+    required: true,
+    width: 12,
+  },
+  {
+    id: 56,
+    fieldId: 15,
+    label: "Address",
+    type: "text",
+    name: "address",
+    placeholder: "Address",
+    required: true,
+    width: 12,
+  },
 ];
 
+// id: 15,
+// stepId: 7,
+// docId: 3,
 export const stepFields = [
   {
     id: 1,

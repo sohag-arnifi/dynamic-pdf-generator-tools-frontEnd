@@ -9,13 +9,14 @@ import { MuiContentEditable, placeHolderSx } from "./Styles/MuiContentEditable";
 import { Box } from "@mui/material";
 import Toolbar from "./Tools";
 import "./Styles/LexicalThemeStyle.css";
-import editorConfig from "./Config";
+import editorConfig from "./config";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import MentionsVarible from "./Plugin/MentionsVariable";
 import { $getRoot, $insertNodes } from "lexical";
 import Form from "../StepperForm/components/Forms";
 import { useFormContext } from "react-hook-form";
+import { BeautifulMentionNode } from "lexical-beautiful-mentions";
 
 function MyCustomAutoFocusPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -33,6 +34,7 @@ const ConvertToHtmlPlugin = ({ docName }: { docName: string }) => {
 
   useEffect(() => {
     const selectedTemplates = localStorage.getItem(docName);
+
     if (selectedTemplates) {
       editor.update(() => {
         const parser = new DOMParser();
@@ -43,16 +45,20 @@ const ConvertToHtmlPlugin = ({ docName }: { docName: string }) => {
         if (!root.isEmpty()) {
           root.clear();
         }
+
         $insertNodes(nodes);
       });
     }
+    editor.registerNodeTransform(BeautifulMentionNode, (textNode) => {
+      textNode.__trigger = "";
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   editor.registerUpdateListener(({ editorState }) => {
     editorState.read(() => {
       const tmp = $generateHtmlFromNodes(editor);
-
       return setValue(docName, tmp);
     });
   });
@@ -76,6 +82,7 @@ const ArnifiRichEditor = ({
             placeholder={<Box sx={placeHolderSx}>Enter some text...</Box>}
             ErrorBoundary={LexicalErrorBoundary}
           />
+
           <HistoryPlugin />
           <HistoryPlugin />
           <ListPlugin />
