@@ -4,10 +4,8 @@ import { styled } from "@mui/material";
 export const MuiContentEditable = styled(ContentEditable)({
   minHeight: 200,
   width: "100%",
-  padding: "0 8px",
+  padding: "50px",
   borderRadius: 5,
-  paddingTop: 2,
-  paddingLeft: 10,
   position: "relative",
   outline: "none",
 });

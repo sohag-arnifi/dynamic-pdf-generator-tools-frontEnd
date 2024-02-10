@@ -1,13 +1,20 @@
-import { BeautifulMentionsPlugin } from "lexical-beautiful-mentions";
+import {
+  BeautifulMentionsMenuItemProps,
+  BeautifulMentionsPlugin,
+} from "lexical-beautiful-mentions";
 import {
   formSteps,
   stepInputFields,
   stepperFields,
 } from "../../../utils/constants/formSteps";
+import { forwardRef } from "react";
 
-const MentionsVarible = ({ docId }: { docId: number }) => {
-  const variableKeys: string[] = [];
-
+export const getVariableKeys = (docId: number) => {
+  const variableKeys: {
+    label: string;
+    key: string;
+    value: { key: string; value: string };
+  }[] = [];
   formSteps.forEach((step) => {
     if (step.docId === docId) {
       const stepFields = stepperFields.filter(
@@ -21,19 +28,47 @@ const MentionsVarible = ({ docId }: { docId: number }) => {
           );
 
           fieldInputs.map((input) => {
-            variableKeys.push(`{{${step.label}.${input.name}}}`);
+            variableKeys.push({
+              label: `{{${step.label
+                .split(" ")
+                .join("")}_${input.name.toUpperCase()}}}`,
+              key: `${step.label
+                .split(" ")
+                .join("")}_${input.name.toUpperCase()}`,
+              value: { key: step.label, value: input.name },
+            });
           });
         }
       });
     }
   });
 
+  return variableKeys;
+};
+
+const MentionsVarible = ({ docId }: { docId: number }) => {
+  const CustomMenuItem = forwardRef<
+    HTMLLIElement,
+    BeautifulMentionsMenuItemProps
+  >(({ item, ...props }, ref) => {
+    return (
+      <li className="mention-tigger" {...props} ref={ref}>
+        <span>{item.value}</span>
+      </li>
+    );
+  });
   const mentionItems = {
-    "@": variableKeys,
-    "#": ["Anton", "Boris", "Catherine", "Dmitri", "Elena", "Felix", "Gina"],
+    "@": getVariableKeys(docId).map((item) => item.label),
   };
 
-  return <BeautifulMentionsPlugin items={mentionItems} menuItemLimit={50} />;
+  return (
+    <BeautifulMentionsPlugin
+      items={mentionItems}
+      allowSpaces
+      menuItemLimit={20}
+      menuItemComponent={CustomMenuItem}
+    />
+  );
 };
 
 export default MentionsVarible;

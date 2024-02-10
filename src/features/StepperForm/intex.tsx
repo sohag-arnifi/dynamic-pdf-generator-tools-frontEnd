@@ -8,6 +8,7 @@ import StepperContent from "./components/StepperContent";
 import { FieldValues } from "react-hook-form";
 import ReviewContent from "./components/ReviewContent";
 import Form from "./components/Forms";
+import generatePDF from "./generatePDF";
 
 const StepperForm = ({ selectedDocId }: { selectedDocId: number }) => {
   const [stepperStep, setStepperStep] = React.useState(() => {
@@ -23,8 +24,9 @@ const StepperForm = ({ selectedDocId }: { selectedDocId: number }) => {
     if (stepperStep !== docSteps.length) {
       localStorage.setItem("active-step", String(stepperStep + 1));
       setStepperStep(stepperStep + 1);
+    } else {
+      generatePDF(data, selectedDoc!);
     }
-    console.log(data);
   };
 
   const previewHandlar = () => {

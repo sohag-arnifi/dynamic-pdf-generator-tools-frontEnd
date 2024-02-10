@@ -152,11 +152,8 @@
   background-color: #eee;
 }
 
-.mention-variable {
-  font-weight: bold;
-}
-
-.mention-trigger {
-  color: #666;
-  font-weight: bold;
+.mention-tigger {
+  list-style-type: none;
+  background-color: red;
+  padding: 5px 0;
 }
