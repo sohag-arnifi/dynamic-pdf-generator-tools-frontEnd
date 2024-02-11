@@ -10,13 +10,17 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { documents } from "./utils/constants/formSteps";
+import Editor from "./features/NewRichEditor/Editor";
 
 function App() {
   const [selectedDoc, setSelectedDoc] = useState(() => {
     const storedSelectedDoc = localStorage.getItem("selected-doc");
     return storedSelectedDoc ? JSON.parse(storedSelectedDoc) : "";
   });
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(() => {
+    const storedShowForm = localStorage.getItem("show-form");
+    return storedShowForm ? JSON.parse(storedShowForm) : true;
+  });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -41,19 +45,6 @@ function App() {
       </Box>
     );
   };
-  // if (loading) {
-  //   return (
-  //     <Box
-  //       marginY={"50px"}
-  //       display={"flex"}
-  //       justifyContent={"center"}
-  //       alignItems={"center"}
-  //       sx={{ minHeight: "60vh" }}
-  //     >
-  //       <Typography variant="h4">Loading...</Typography>
-  //     </Box>
-  //   );
-  // }
 
   return (
     <div
@@ -64,6 +55,7 @@ function App() {
         padding: "50px",
       }}
     >
+      {/* <Editor /> */}
       <Box
         sx={{
           maxWidth: "1000px",
@@ -120,14 +112,20 @@ function App() {
           }}
         >
           <Button
-            onClick={() => setShowForm(true)}
+            onClick={() => {
+              setShowForm(true);
+              localStorage.setItem("show-form", JSON.stringify(true));
+            }}
             color={showForm ? "error" : "primary"}
             variant="contained"
           >
             Dynamic Form
           </Button>
           <Button
-            onClick={() => setShowForm(false)}
+            onClick={() => {
+              setShowForm(false);
+              localStorage.setItem("show-form", JSON.stringify(false));
+            }}
             color={!showForm ? "error" : "primary"}
             variant="contained"
           >
