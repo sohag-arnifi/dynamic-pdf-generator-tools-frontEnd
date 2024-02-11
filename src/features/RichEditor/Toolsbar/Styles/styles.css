@@ -1,11 +1,13 @@
 .toolbar {
   display: flex;
   margin-bottom: 1px;
-  background: gainsboro;
-  padding: 4px;
+  background: #fff;
+  padding: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   vertical-align: middle;
+  width: 21cm;
+  margin: auto;
 }
 
 .toolbar button.toolbar-item {

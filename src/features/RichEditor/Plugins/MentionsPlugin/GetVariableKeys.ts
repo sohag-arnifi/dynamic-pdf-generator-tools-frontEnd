@@ -1,13 +1,8 @@
 import {
-  BeautifulMentionsMenuItemProps,
-  BeautifulMentionsPlugin,
-} from "lexical-beautiful-mentions";
-import {
   formSteps,
   stepInputFields,
   stepperFields,
-} from "../../../utils/constants/formSteps";
-import { forwardRef } from "react";
+} from "../../../../utils/constants/formSteps";
 
 export const getVariableKeys = (docId: number) => {
   const variableKeys: {
@@ -45,31 +40,3 @@ export const getVariableKeys = (docId: number) => {
 
   return variableKeys;
 };
-
-const MentionsVarible = ({ docId }: { docId: number }) => {
-  const CustomMenuItem = forwardRef<
-    HTMLLIElement,
-    BeautifulMentionsMenuItemProps
-  >(({ item, ...props }, ref) => {
-    return (
-      <li className="mention-tigger" {...props} ref={ref}>
-        {item.value}
-      </li>
-    );
-  });
-
-  const mentionItems = {
-    "@": getVariableKeys(docId).map((item) => item.label),
-  };
-
-  return (
-    <BeautifulMentionsPlugin
-      items={mentionItems}
-      allowSpaces
-      menuItemLimit={20}
-      menuItemComponent={CustomMenuItem}
-    />
-  );
-};
-
-export default MentionsVarible;

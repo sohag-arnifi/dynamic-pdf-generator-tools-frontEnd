@@ -1,6 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import Handlebars from "handlebars";
-import { getVariableKeys } from "../../RichEditor/Plugins/MentionsVariable";
+import { getVariableKeys } from "../../RichEditor/Plugins/MentionsPlugin/GetVariableKeys";
 
 const generatePDF = (data: FieldValues, doc: { name: string; id: number }) => {
   const htmlTemp = data[doc.name];
@@ -21,13 +21,14 @@ const generatePDF = (data: FieldValues, doc: { name: string; id: number }) => {
 };
 
 const generatePDFWithTemplate = (html: string) => {
+  console.log(html);
   return `
   <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PDF</title>
+    <title>PDF</title>  
   </head>
   <body>
   ${html}

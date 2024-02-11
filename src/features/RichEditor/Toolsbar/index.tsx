@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -256,13 +257,13 @@ const Toolsbar = () => {
           >
             <i className="format code" />
           </IconButton>
-          <IconButton
+          {/* <IconButton
             onClick={insertLink}
             className={"toolbar-item spaced " + (isLink ? "active" : "")}
             aria-label="Insert Link"
           >
             <i className="format link" />
-          </IconButton>
+          </IconButton> */}
           {isLink &&
             createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
           <Divider />

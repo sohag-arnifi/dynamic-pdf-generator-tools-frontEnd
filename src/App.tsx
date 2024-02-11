@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { documents } from "./utils/constants/formSteps";
-import Editor from "./features/NewRichEditor/Editor";
 
 function App() {
   const [selectedDoc, setSelectedDoc] = useState(() => {
@@ -134,32 +133,32 @@ function App() {
         </Stack>
       </Box>
 
-      <main
-        style={{
-          maxWidth: "1000px",
-          margin: "auto",
-          backgroundColor: "white",
-          borderRadius: "10px",
-          minHeight: "80vh",
-          padding: "20px",
-        }}
-      >
+      <main>
         {showForm ? (
           !selectedDoc ? (
-            <Box>
-              <Typography
-                variant="h5"
-                sx={{
-                  padding: "20px",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                No document selected!
-              </Typography>
-            </Box>
+            <Typography
+              variant="h5"
+              sx={{
+                padding: "20px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              No document selected!
+            </Typography>
           ) : (
-            <StepperForm selectedDocId={selectedDoc?.id} />
+            <Box
+              sx={{
+                maxWidth: "1000px",
+                margin: "auto",
+                backgroundColor: "white",
+                borderRadius: "10px",
+                minHeight: "80vh",
+                padding: "20px",
+              }}
+            >
+              <StepperForm selectedDocId={selectedDoc?.id} />
+            </Box>
           )
         ) : loading ? (
           <Loader />

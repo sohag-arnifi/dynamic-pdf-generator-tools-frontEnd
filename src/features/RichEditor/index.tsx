@@ -7,14 +7,14 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import { MuiContentEditable, placeHolderSx } from "./Styles/MuiContentEditable";
+import { MuiContentEditable } from "./Styles/MuiContentEditable";
 import { Box } from "@mui/material";
 import "./Styles/LexicalThemeStyle.css";
 import editorConfig from "./config";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
-import MentionsVarible from "./Plugins/MentionsVariable";
-import { $getRoot, $insertNodes } from "lexical";
+import MentionsPlugin from "./Plugins/MentionsPlugin";
+import { $getRoot, $insertNodes, EditorState, LexicalEditor } from "lexical";
 import Form from "../StepperForm/components/Forms";
 import { useFormContext } from "react-hook-form";
 import { BeautifulMentionNode } from "lexical-beautiful-mentions";
@@ -38,9 +38,10 @@ const ConvertToHtmlPlugin = ({ docName }: { docName: string }) => {
   const value = getValues(docName);
 
   useEffect(() => {
+    const parser = new DOMParser();
+
     if (value) {
       editor.update(() => {
-        const parser = new DOMParser();
         const dom = parser.parseFromString(value, "text/html");
         const nodes = $generateNodesFromDOM(editor, dom);
         const root = $getRoot();
@@ -59,7 +60,6 @@ const ConvertToHtmlPlugin = ({ docName }: { docName: string }) => {
     editor.registerUpdateListener(({ editorState }) => {
       editorState.read(() => {
         const tmp = $generateHtmlFromNodes(editor);
-
         return setValue(docName, tmp);
       });
     });
@@ -70,8 +70,21 @@ const ConvertToHtmlPlugin = ({ docName }: { docName: string }) => {
   return null;
 };
 
-const handelOnChange = (e: any) => {
-  console.log(e);
+const handelOnChange = (
+  editorState: EditorState,
+  editor: LexicalEditor,
+  tags: Set<string>
+) => {
+  // editor.update(() => {
+  //   // if (!root.isEmpty()) {
+  //   //   root.clear();
+  //   // }
+  // });
+  // editorState.read(() => {
+  //   const root = $getRoot();
+  //   const selection = $getSelection();
+  //   console.log(root, selection);
+  // });
 };
 
 const ArnifiRichEditor = ({
@@ -88,7 +101,7 @@ const ArnifiRichEditor = ({
           <Box sx={{ position: "relative" }}>
             <RichTextPlugin
               contentEditable={<MuiContentEditable />}
-              placeholder={<Box sx={placeHolderSx}>Enter some text...</Box>}
+              placeholder={<Box></Box>}
               ErrorBoundary={LexicalErrorBoundary}
             />
             <OnChangePlugin onChange={handelOnChange} />
@@ -96,7 +109,7 @@ const ArnifiRichEditor = ({
             <HistoryPlugin />
             <ListPlugin />
             <LinkPlugin />
-            <MentionsVarible docId={selectedDoc.id} />
+            <MentionsPlugin docId={selectedDoc.id} />
             <PlaygroundAutoLinkPlugin />
             <CodeHighlightPlugin />
             <ListMaxIndentLevelPlugin />
